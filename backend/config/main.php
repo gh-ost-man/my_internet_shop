@@ -42,7 +42,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/' => 'category/index',
+                '/' => '/site/index',
                 '<controller>/<id:\d+><action>' => '<controller>/<action>'
             ],
         ],
