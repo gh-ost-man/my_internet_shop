@@ -1,4 +1,4 @@
-<?php 
+<?php
     namespace backend\controllers;
     
     use Yii;
@@ -8,11 +8,10 @@
     use yii\helpers\ArrayHelper;
     use yii\filters\AccessControl;
 
-    use backend\models\TovarForm;
-    use backend\models\Category;
-    use backend\models\Tovar;
-   
-    class TovarController extends Controller
+    use backend\models\PromotionForm;
+    use backend\models\Promotion;
+
+    class PromotionController extends Controller
     {
         public function behaviors()
         {
@@ -33,13 +32,12 @@
                         ],
                     ],
                 ],
-            ];
-        }
+            ];        }
 
         public function actionIndex()
         {
             $dataProvider = new ActiveDataProvider([
-                'query' => Tovar::find()
+                'query' => Promotion::find()
             ]);
 
             return $this->render('index',[
@@ -49,81 +47,62 @@
 
         public function actionCreate()
         {
-            $model = new TovarForm;
+            $model = new PromotionForm;
 
             if($model->load(Yii::$app->request->post())){
-                $tovar = new Tovar;
+                $promotion = new Promotion;
                 $model->imageFile = UploadedFile::getInstances($model, 'imageFile');
                 if ($imagePath = $model->upload()){
-                    $tovar->name = $model->name;
-                    $tovar->description = $model->description;
-                    $tovar->count = $model->count;
-                    $tovar->category_id = $model->category_id;
-                    $tovar->price = $model->price;
-                    $tovar->url_image = json_encode($imagePath);
+                    $promotion->name = $model->name;
+                    $promotion->description = $model->description;
+                    $promotion->url_image = json_encode($imagePath);
 
-                    if($tovar->save()){
-                        Yii::$app->session->setFlash('success', 'Товар збережено в БД');
+                    if($promotion->save()){
+                        Yii::$app->session->setFlash('success', 'Рекламу збережено в БД');
                     }
                 } else {
-                    Yii::$app->session->setFlash('error', 'Помилка збереження товару в БД');
+                    Yii::$app->session->setFlash('error', 'Помилка збереження реклами в БД');
                 }
-                return $this->redirect(['tovar/index']);
+                return $this->redirect(['promotion/index']);
             }
 
-            $categories = Category::find()->all();
-            foreach($categories as $category){
-                $category_array[$category->id] = $category->name;
-            }
             return $this->render('create', [
                 'model' => $model,
-                'categories' => $category_array,
                 'initialPreview' => [],
                 'initialConfig' => [],
-                'tovar_id' => ''
+                'promotion_id' => ''
             ]);
         }
 
         public function actionUpdate($id)
         {
-            $model = new TovarForm;
-            $tovar = Tovar::findOne(['id' => $id]);
+            $model = new PromotionForm;
+            $promotion = Promotion::findOne(['id' => $id]);
 
             if($model->load(Yii::$app->request->post())){
                 $model->imageFile = UploadedFile::getInstances($model, 'imageFile');
                 $imagePath = $model->upload();
                 if ($imagePath !== false){
-                    $tovar->name = $model->name;
-                    $tovar->description = $model->description;
-                    $tovar->count = $model->count;
-                    $tovar->category_id = $model->category_id;
-                    $tovar->price = $model->price;
+                    $promotion->name = $model->name;
+                    $promotion->description = $model->description;
                     
                     if($imagePath){
-                        $image = json_decode($tovar->url_image, true);
+                        $image = json_decode($promotion->url_image, true);
                         $imagePath = array_merge($image, $imagePath);
-                        $tovar->url_image = json_encode($imagePath);
+                        $promotion->url_image = json_encode($imagePath);
                     } 
-                    if($tovar->save()){
-                        Yii::$app->session->setFlash('success', 'Товар оновлено в БД');
+                    if($promotion->save()){
+                        Yii::$app->session->setFlash('success', 'Рекламу оновлено в БД');
                     }
                 } else {
-                    Yii::$app->session->setFlash('error', 'Помилка оновлення товару в БД');
+                    Yii::$app->session->setFlash('error', 'Помилка оновлення реклами в БД');
                 }
-                return $this->redirect(['tovar/index']);
+                return $this->redirect(['promotion/index']);
             }
 
-            $model->name = $tovar->name;
-            $model->description = $tovar->description;
-            $model->count = $tovar->count;
-            $model->price = $tovar->price;
-            $model->category_id = $tovar->category_id;
-            $categories = Category::find()->all();
-            foreach($categories as $category) {
-                $category_array[$category->id] = $category->name;
-            }
-
-            $images = json_decode($tovar->url_image, true);
+            $model->name = $promotion->name;
+            $model->description = $promotion->description;
+            $images = json_decode($promotion->url_image, true);
            
             $initialPreview = [];
             $initialConfig = [];
@@ -137,14 +116,13 @@
         
             return $this->render('create', [
                 'model' => $model,
-                'categories' => $category_array,
                 'initialPreview' => $initialPreview,
-                'tovar_id' => $tovar->id,
+                'promotion_id' => $promotion->id,
                 'initialConfig' => $initialConfig,
             ]);
         }
 
-        public function actionFileDeleteTovar($id)
+        public function actionFileDeletePromotion($id)
         {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;// формат відповіді
             
@@ -153,8 +131,8 @@
                 
                 unlink($image);
                 
-                $tovar = Tovar::findOne(['id' => $id]);
-                $images = json_decode($tovar->url_image, true);
+                $promotion = Promotion::findOne(['id' => $id]);
+                $images = json_decode($promotion->url_image, true);
                 $result = [];
 
                 foreach($images as $value){
@@ -163,38 +141,37 @@
                     }
                 }
                 
-                $tovar->url_image = json_encode($result);
-                $tovar->save();
+                $promotion->url_image = json_encode($result);
+                $promotion->save();
             }
+            
             return true;
         }
 
         public function actionDelete($id)
         {
-            $tovar = Tovar::findOne(['id' => $id]);
-            $images = json_decode($tovar->url_image, true);
+            $promotion = Promotion::findOne(['id' => $id]);
+            $images = json_decode($promotion->url_image, true);
           
-            if($tovar->delete(['id' => $id])) {
+            if($promotion->delete(['id' => $id])) {
                 foreach($images as $image){
                     unlink($image);
                 }
 
-                Yii::$app->session->setFlash('success', "Товар: < {$tovar->name} > видалено з БД");
+                Yii::$app->session->setFlash('success', "Товар: < {$promotion->name} > видалено з БД");
             } else {
                 Yii::$app->session->setFlash('error', 'Помилка видалення товару з БД');
             }
 
-            return $this->redirect(['tovar/index']);
+            return $this->redirect(['promotion/index']);
         }
-
 
         public function actionView($id)
         {
-            $tovar = Tovar::findOne(['id' => $id]);
-            $images = json_decode($tovar->url_image);
-
+            $promotion = Promotion::findOne(['id' => $id]);
+            $images = json_decode($promotion->url_image);
             return $this->render('view', [
-                'tovar' => $tovar,
+                'promotion' => $promotion,
                 'images' => $images
             ]);
         }

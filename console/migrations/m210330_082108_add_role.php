@@ -15,6 +15,8 @@ class m210330_082108_add_role extends Migration
         $auth = Yii::$app->authManager;
         $auth->add($auth->createRole('admin'));
         $auth->add($auth->createRole('user'));
+        $auth->add($auth->createRole('owner'));
+        $auth->add($auth->createRole('manager'));
     }
 
     /**

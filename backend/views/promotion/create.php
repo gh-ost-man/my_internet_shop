@@ -6,8 +6,8 @@ use kartik\select2\Select2;
 use kartik\widgets\FileInput;
 use yii\helpers\Url;
 
-$this->title = 'Створення товару';
-$this->params['breadcrumbs'][] = ['label' => 'Товари', 'url' => ['index']];
+$this->title = 'Створення реклами';
+$this->params['breadcrumbs'][] = ['label' => 'Реклами', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -27,28 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'description')->textarea(['row' => '3'])->label('Опис товару'); ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($model, 'count')->textInput(['type' => 'number', 'min' => 0, 'step' => '1']); ?>
-            </div>
-            <div class="col-md-6">
-                <?= $form->field($model, 'price')->textInput(['type' => 'number', 'min' => 0, 'step' => '0.1']); ?>
-            </div>
-        </div>
-       
-        <div class="row">
-            <div class="col-md-12">
-                <?= $form->field($model, 'category_id')->widget(Select2::classname(), [
-                    'language' => 'uk-Ua',
-                    'data' => $categories,
-                    'options' => ['placeholder' => 'Виберіть ...'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]); ?>
+                <?= $form->field($model, 'description')->textarea(['row' => '3'])->label('Опис'); ?>
             </div>
         </div>
         <div class="row">
@@ -68,8 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'removeClass' => 'btn btn-default pull-right',
                         'browseClass' => 'btn btn-primary pull-right',
                         'maxFileSize'=> 2800,
-                        'deleteUrl' => Url::to(['/tovar/file-delete-tovar?id=' . $tovar_id]),
-                        // 'deleteUrl' => Url::to(["/tovar/" . $tovar_id . "/file-delete-tovar"])
+                        // 'deleteUrl' => Url::to(["/promotion/" . $promotion_id . "/file-delete-promotion"])
+                        'deleteUrl' => Url::to(['/promotion/file-delete-promotion?id=' . $promotion_id]),
                     ]
                 ]);?>
             </div>

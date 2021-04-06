@@ -1,10 +1,9 @@
-<?php
-
+<?php 
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
 
-$this->title = 'Категорія';
+$this->title = 'Знижка';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -12,13 +11,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-md-12">
         <?= Html::a(
-            'Додати категорію',
-            Url::toRoute('category/create'),
+            'Додати знижку',
+            Url::toRoute('discount/create'),
             [
                 'class' => 'btn btn-success pull-right',
-                'id' => 'category_create'
+                'id' => 'discount-create'
             ]
-        );?>
+            ); ?>
     </div>
     <div class="col-md-12">
         <?= GridView::widget([
@@ -28,13 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id',
                 'name',
                 'description',
+                'percent',
                 [
                     'class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',
                     'contentOptions' => ['style' => 'width: 20%'],
                     'buttons' => [
-                        // 'view' => function ($url, $model, $key) {
-                        //     return Html::a('View', ['view','id' => $model->id], ['class' => 'btn btn-info']);
-                        // },
                         'update' => function ($url, $model, $key){
                             return Html::a('Update', ['update','id' => $model->id], ['class' => 'btn btn-success']);
                         },
@@ -45,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]
         ]); 
+        
         ?>
     </div>
 </div>

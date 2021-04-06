@@ -23,5 +23,4 @@ class CategoryForm extends Model
             'name' => 'Назва категорії'
         ];
     }
-
 }
