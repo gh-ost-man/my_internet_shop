@@ -9,8 +9,8 @@
     use yii\filters\AccessControl;
 
     use backend\models\TovarForm;
-    use backend\models\Category;
-    use backend\models\Tovar;
+    use common\models\Category;
+    use common\models\Tovar;
    
     class TovarController extends Controller
     {

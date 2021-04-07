@@ -8,7 +8,7 @@
     use yii\filters\AccessControl;
 
     use backend\models\CategoryForm;
-    use backend\models\Category;
+    use common\models\Category;
 
 
     class CategoryController extends Controller

@@ -263,14 +263,16 @@ $this->registerJS($js);
 
 <div class="row">
     <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-8 ">
         <div>
             <h2><?= $tovar->name ?></h2>
             <p><?= $tovar->description ?></p>
+            <p>Price:   <?= $tovar->price ?></p>
+            <p>Count:   <?= $tovar->count ?></p>
         </div>
         <div class="gallery">
             <div class="gallery-container">
-                <?php if (count($images)<3) { 
+                <?php if (count($images) < 3) { 
                     for($j = 0; $j < 5; $j++) : ?>
                         <?php foreach($images as $image) : ?>
                             <img class="gallery-item gallery-item-<?= $i++?>" src="../../<?= $image ?>" data-index="1">

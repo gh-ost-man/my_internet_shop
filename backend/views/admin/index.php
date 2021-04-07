@@ -30,23 +30,7 @@ JS;
 
 $i = 1;
 $this->registerJS($js);
-
-// $this->registerCss(
-//     "   
-//         body 
-//         {
-//             color: red;
-//         }
-
-//     "
-// );
-
 ?>
-
-
-
-
-
 
 <div class="panel panel-default">
   <!-- Default panel contents -->
@@ -70,19 +54,9 @@ $this->registerJS($js);
             <th scope="row"><?= $user['id']; ?></th>
             <td><?= $user['username'] ?></td>
             <td><?= $user['email'] ?></td>
-            <td>
-                <?= Select2::widget([
-                    'name' => $user['id'],
-                    'data' => $role_array,
-                    'value' => $user['role'],
-                    'options' => [
-                        'class' => 'role',
-                        'placeholder' => 'Select provinces ...',
-                    'multiple' => false
-                    ],
-                ]); ?>
-            </td>
+            <td><?= $user['role'] ?></td>
             <td> 
+                <?=  Html::a('View', ['view','id' => $user['id']], ['class' => 'btn btn-warning']);  ?>
                 <?=  Html::a('Delete', ['delete','id' => $user['id']], ['class' => 'btn btn-danger']);  ?>
             </td>
         </tr>
@@ -90,3 +64,4 @@ $this->registerJS($js);
   </tbody>
   </table>
 </div>
+

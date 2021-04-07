@@ -47,7 +47,7 @@
             foreach($users as $user){
                 if(array_keys(Yii::$app->AuthManager->getRolesByUser($user['id'])) != null){
                     $role = array_keys(Yii::$app->AuthManager->getRolesByUser($user['id']))[0];
-                }else {
+                } else {
                     $role = '';
                 }
                 $user_array[] = [
@@ -61,6 +61,30 @@
         
             return  $this->render('index', [
                 'user_array' => $user_array,
+                'role_array' => $role_array
+            ]);
+        }
+
+        public function actionView($id)
+        {
+            $role = Yii::$app->AuthManager->Roles;
+            $role_array = [];
+            foreach($role as $key => $value){
+                $role_array[$key] = $key; 
+            }
+           
+            $user = User::findOne(['id' => $id]);
+            
+            if(array_keys(Yii::$app->AuthManager->getRolesByUser($id)) != null){
+                $role = array_keys(Yii::$app->AuthManager->getRolesByUser($id))[0];
+            } else {
+                $role = '';
+            }
+
+        
+            return  $this->render('view', [
+                'user' => $user,
+                'role' => $role,
                 'role_array' => $role_array
             ]);
         }

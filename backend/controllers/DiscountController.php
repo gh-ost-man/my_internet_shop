@@ -9,7 +9,7 @@
     use yii\filters\AccessControl;
 
     use backend\models\DiscountForm;
-    use backend\models\Discount;
+    use common\models\Discount;
 
     class DiscountController extends Controller
     {
