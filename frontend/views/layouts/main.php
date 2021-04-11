@@ -6,10 +6,11 @@
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
-use yii\widgets\Breadcrumbs;
+use yii\bootstrap4\Breadcrumbs;
 use frontend\assets\AppAsset;
 use yii\bootstrap4\Alert;
 use yii\bootstrap4\Button;
+
 
 
 AppAsset::register($this);
@@ -28,6 +29,12 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+<style>
+    .bg-black{
+        background:#111;
+    }
+</style>
+
 <div class="wrap">
     <?php
 
@@ -44,7 +51,7 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-dark bg-dark navbar-expand-md ',
+            'class' => 'navbar navbar-dark bg-black  navbar-expand-md ',
         ],
     ]);
     // $menuItems = [
@@ -70,15 +77,19 @@ AppAsset::register($this);
         'items' => $menuItems,
     ]);
   
+    if(Yii::$app->user->id != null){
+        echo Html::tag('a', 'Basket', ['class' => 'btn btn-info', 'href' => Yii::$app->homeUrl . 'tovar/basket']);
+    }
     NavBar::end();
     
     ?>
+
 
     <div class="container">
         <?= Breadcrumbs::widget([
           'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
+        <!-- <?= Alert::widget() ?> -->
         <?= $content ?>
     </div>
 </div>
@@ -86,8 +97,7 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="text-white pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 

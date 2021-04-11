@@ -11,6 +11,7 @@
     use backend\models\TovarForm;
     use common\models\Category;
     use common\models\Tovar;
+    use common\models\Discount;
    
     class TovarController extends Controller
     {
@@ -54,12 +55,15 @@
             if($model->load(Yii::$app->request->post())){
                 $tovar = new Tovar;
                 $model->imageFile = UploadedFile::getInstances($model, 'imageFile');
+               
                 if ($imagePath = $model->upload()){
                     $tovar->name = $model->name;
                     $tovar->description = $model->description;
                     $tovar->count = $model->count;
                     $tovar->category_id = $model->category_id;
                     $tovar->price = $model->price;
+                    var_dump($imagePath);
+                    die();
                     $tovar->url_image = json_encode($imagePath);
 
                     if($tovar->save()){
@@ -75,9 +79,17 @@
             foreach($categories as $category){
                 $category_array[$category->id] = $category->name;
             }
+
+            $discounts = Discount::find()->all();
+            $discount_array = [];
+            foreach($discounts as $discount){
+                $discount_array[$discount->id] = $discount->name;
+            }
+
             return $this->render('create', [
                 'model' => $model,
                 'categories' => $category_array,
+                'discounts' => $discount_array,
                 'initialPreview' => [],
                 'initialConfig' => [],
                 'tovar_id' => ''
@@ -97,6 +109,7 @@
                     $tovar->description = $model->description;
                     $tovar->count = $model->count;
                     $tovar->category_id = $model->category_id;
+                    $tovar->discount_id = $model->discount_id;
                     $tovar->price = $model->price;
                     
                     if($imagePath){
@@ -118,9 +131,17 @@
             $model->count = $tovar->count;
             $model->price = $tovar->price;
             $model->category_id = $tovar->category_id;
+            $model->discount_id = $tovar->discount_id;
+ 
             $categories = Category::find()->all();
             foreach($categories as $category) {
                 $category_array[$category->id] = $category->name;
+            }
+
+            $discounts = Discount::find()->all();
+            $discount_array = [];
+            foreach($discounts as $discount){
+                $discount_array[$discount->id] = $discount->name;
             }
 
             $images = json_decode($tovar->url_image, true);
@@ -138,6 +159,7 @@
             return $this->render('create', [
                 'model' => $model,
                 'categories' => $category_array,
+                'discounts' => $discount_array,
                 'initialPreview' => $initialPreview,
                 'tovar_id' => $tovar->id,
                 'initialConfig' => $initialConfig,

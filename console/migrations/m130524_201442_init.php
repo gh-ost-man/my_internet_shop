@@ -31,3 +31,4 @@ class m130524_201442_init extends Migration
         $this->dropTable('{{%user}}');
     }
 }
+// $this->insert('dic_error_messages', ['module' => "Медичні записи    ", 'submodule' => " DiagnosticReport    ", 'message' => "results_interpreter with type reference must be filled when service category is diagnostic_procedure or imaging", 'message_ua' => "працівник що інтерпретував результати обв'язковий для діагностичного звіту з категорією візуалізація або діагностична процедура"]);

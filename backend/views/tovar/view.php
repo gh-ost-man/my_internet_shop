@@ -67,7 +67,7 @@ $this->registerCss(
             opacity: 1;
             left: 50%;
             transform: translateX(-50%);
-            width: 300px;
+            width: 400px;
             z-index: 2;
         }
 
@@ -259,6 +259,9 @@ JS;
 
 $this->registerJS($js);
 
+$this->title = 'Category';
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <div class="row">
@@ -275,15 +278,15 @@ $this->registerJS($js);
                 <?php if (count($images) < 3) { 
                     for($j = 0; $j < 5; $j++) : ?>
                         <?php foreach($images as $image) : ?>
-                            <img class="gallery-item gallery-item-<?= $i++?>" src="../../<?= $image ?>" data-index="1">
+                            <img class="gallery-item gallery-item-<?= $i++?>" src="/<?= $image ?>" data-index="1">
                         <?php endforeach ?>
                         <?php foreach($images as $image) : ?>
-                            <img class="gallery-item gallery-item-<?= $i++?>" src="../../<?= $image ?>" data-index="1">
+                            <img class="gallery-item gallery-item-<?= $i++?>" src="/<?= $image ?>" data-index="1">
                         <?php endforeach ?>
                     <?php endfor ?>
                 <?php } else { ?>
                     <?php foreach($images as $image) : ?>
-                        <img class="gallery-item gallery-item-<?= $i++?>" src="../../<?= $image ?>" data-index="1">
+                        <img class="gallery-item gallery-item-<?= $i++?>" src="/<?= $image ?>" data-index="1">
                     <?php endforeach ?>
                 <?php } ?>
             </div>

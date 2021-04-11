@@ -53,6 +53,18 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="row">
             <div class="col-md-12">
+                <?= $form->field($model, 'discount_id')->widget(Select2::classname(), [
+                    'language' => 'uk-Ua',
+                    'data' => $discounts,
+                    'options' => ['placeholder' => 'Виберіть ...'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <?= $form->field($model, 'imageFile')->widget(FileInput::classname(), [
                     'options'=>[
                         'multiple'=>true,

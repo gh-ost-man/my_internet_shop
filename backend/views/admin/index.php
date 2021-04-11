@@ -23,7 +23,6 @@ $js = <<< JS
             success: (function() {
                 alert('Role is changed');
             })
-
         });
     });
 JS;

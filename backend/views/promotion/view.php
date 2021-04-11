@@ -64,7 +64,7 @@ $this->registerCss(
             opacity: 1;
             left: 50%;
             transform: translateX(-50%);
-            width: 300px;
+            width: 400px;
             z-index: 2;
         }
 
